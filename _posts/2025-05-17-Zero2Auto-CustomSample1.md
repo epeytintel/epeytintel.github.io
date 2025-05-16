@@ -2,7 +2,7 @@
 layout: post
 title: Zero2Auto Custom Sample 1
 date: '2025-05-17 00:00:00 +0800'
-categories: Malware Analysis
+categories: [Malware Analysis]
 tags: [malware analysis, zero2auto]
 image:
     path: /images/2025-05-17-Zero2Auto-CustomSample1/zero2auto.png
