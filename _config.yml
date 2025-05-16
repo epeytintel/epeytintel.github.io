@@ -15,7 +15,7 @@ timezone:
 # ↓ --------------------------
 
 title: Epeyt-Intel # the main title
-
+favicon: https://media.printler.com/media/photo/97531.jpg?rmode=crop&width=638&height=900
 tagline: Sharing Malware Analysis and Threat Intelligence Findings # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
