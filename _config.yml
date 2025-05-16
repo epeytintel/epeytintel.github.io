@@ -36,7 +36,7 @@ social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Nathaniel Morales
-
+  email: example@domain.com
   links:
     # The first element serves as the copyright owner's link
     - https://x.com/epeyt_intel # change to your Twitter homepage
@@ -148,7 +148,7 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: "epeyt"
+baseurl: "/epeyt"
 
 # ------------ The following options are not recommended to be modified ------------------
 
