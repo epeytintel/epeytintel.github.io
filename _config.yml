@@ -97,7 +97,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://rhymetec.com/wp-content/uploads/2024/12/PasswordSecurityMeme.png
+avatar:  https://www.secureworld.io/hs-fs/hubfs/meme-data-breach.gif?width=695&name=meme-data-breach.gif
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
