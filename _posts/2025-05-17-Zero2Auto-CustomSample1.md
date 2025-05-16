@@ -2,10 +2,10 @@
 layout: post
 title: Zero2Auto Custom Sample 1
 date: '2025-05-17 00:00:00 +0800'
-categories:
-    - Malware Analysis
-    - Cyber Security
+categories: Malware Analysis
 tags: [malware analysis, zero2auto]
+image:
+    path: /images/2025-05-17-Zero2Auto-CustomSample1/zero2auto.png
 ---
 
 For this write-up, I will share my analysis for the first custom sample from Zero2Auto Malware Analysis Course. For anyone interested in exploring the course further, you can access it through this link: [https://courses.zero2auto.com/](https://courses.zero2auto.com/)
