@@ -29,7 +29,8 @@ SHA1: 1b76e5a645a0df61bb4569d54bd1183ab451c95e
 
 The sample is compiled in C++ and has high entropy in the .text and .rsrc section. There were also no interesting strings found in the file so we can assume that the initial sample is packed. 
 
-![[images/2025-05-17-Zero2Auto-CustomSample1/Pasted image 20250312164000.png]]
+![img-description](/images/2025-05-17-Zero2Auto-CustomSample1/20250312164000.png)
+
 
 Upon execution in a controlled malware analysis environment, the sample spawns an  `svchost.exe` process, a sign that process injection techniques are likely being employed. 
 
@@ -39,4 +40,6 @@ Through analysis, I found that this sample runs in multiple stages, with each st
 
 Upon opening the sample in IDA, we see several functions that take hardcoded strings as input and use them with `LoadLibraryA` and `GetProcAddress`, likely to resolve API calls dynamically.
 
-![[images/2025-05-17-Zero2Auto-CustomSample1/Pasted image 20250312183551.png]]
+![img-description](/images/2025-05-17-Zero2Auto-CustomSample1/20250312183551.png)
+
+
