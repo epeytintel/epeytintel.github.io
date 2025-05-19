@@ -105,6 +105,7 @@ condition:
 }
 ```
 
+
 This time we discovered a new sample with low detection. The sample is similar to the IOC mentioned on the blog and just differs on the identifier for the request in retrieving the next stage.
 
 **SHA1: e6e6648e087971cd311c3d2c27a0477fea674ded**
@@ -113,7 +114,74 @@ This time we discovered a new sample with low detection. The sample is similar t
 
 # Pivoting similar C2
 
-For pivoting similar C2, we will use the information we got from the Stage 1 Loader. 
+According to the blog, the same IP address (*165.227.148[.]68*) was repeatedly used to download subsequent stages of the malware. For pivoting similar C2, we will also use the findings we got from the Stage 1 Loader. 
+
+We can search the IP address in *urlscan.io*. [https://urlscan.io/search/#165.227.148.68](https://urlscan.io/search/#165.227.148.68)
+
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/urlscan1.png)
+
+Most of the recent scans for this IP are currently down, and the response size was  *784 bytes*
+
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/error404.png)
+
+We can check for older scans that returned a different response size to check for the site when it is still active and gain further insight into its past activity.
+
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/urlscan2.png)
+
+We identified a scan from one month ago with a different response body and size. It has a Russian page title: **"Настоящее время"** which translates to **"Present Tense"**.
+
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/cloudmediaportal.png)
+
+Since this is a ClickFix distribution, we can examine the DOM (Document Object Model) to check its HTML source code and identify any embedded malicious components
+
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/dom1.png)
+
+Upon analyzing the code, we found a function that is part of the **ClickFix Stage 1 Loader**. This function executes a powershell command to download the next stage of the malware.
+
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/maldom1.png)
+
+## Finding other C2 servers
+
+By examining the code within the HTML response body, we can extract malicious functions and indicators that we can use to query similar C2 infrastructures.
+
+To pivot, we can use [FOFA](https://en.fofa.info/) to identify additional C2 addresses containing the same function within their HTML response bodies.
+
+[https://en.fofa.info/result?qbase64=ImZ1bmN0aW9uIGNvcHlUZXh0VG9DbGlwYm9hcmQodGV4dCkiICYmICJjbWQgL2Mgc3RhcnQgL21pbiBwb3dlcnNoZWxsIg%3D%3D](https://en.fofa.info/result?qbase64=ImZ1bmN0aW9uIGNvcHlUZXh0VG9DbGlwYm9hcmQodGV4dCkiICYmICJjbWQgL2Mgc3RhcnQgL21pbiBwb3dlcnNoZWxsIg%3D%3D)
+
+```
+"function copyTextToClipboard(text)" && "cmd /c start /min powershell"
+```
+
+From this query, we identified two IP addresses, including the one previously mentioned in the report:
+- `165.227.148[.]68` — `cloudmediaportal[.]com`
+- `193.43.104[.]109` — `mobilizationcenter[.]com.ua` **(new)**
+
+## Verifying discovered C2 Servers
+
+The newly discovered c2 has low detection on VirusTotal and currently does not have any community comments.
+
+*mobilizationcenter[.]com.ua*
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/newc2.png)
+
+We can query the newly discovered domain on [urlscan.io](https://urlscan.io) to gather additional information and to verify if this is part of the campaign.
+
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/urlscan3.png)
+
+By examining the DOM, we can verify that this domain is part of the COLDRIVER infrastructure and is responsible for downloading the next stage from _165.227.148[.]68_, similar with the initial C2 identified in the blog.
+
+![img-description](/images/2025-05-17-Coldriver-Lostkeys/newc2verify.png)
+
+
+---
+
+# LOSTKEYS IOCs
+## additional samples
+- e6e6648e087971cd311c3d2c27a0477fea674ded - Stage 2 Loader
+
+## Additional C2
+- 193.43.104[.]109 - mobilizationcenter[.]com.ua
+
+
 
 
 
