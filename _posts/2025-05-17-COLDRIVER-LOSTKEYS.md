@@ -31,7 +31,9 @@ Analyzing the file, we spot the malicious command copied to the clipboard. The c
 
 We can also create a YARA rule to monitor new similar samples in VirusTotal
 
-```yara
+### Yara Rule for Stage 1 ClickFix
+
+```
 rule Trojan_LOSTKEYS_ClickFix
 {
 meta:
@@ -74,7 +76,9 @@ Stage 2 is responsible for checking if the environment the malware was executed 
 
 We can also create a YARA rule to monitor new similar samples in VirusTotal. 
 
-```yara
+### Yara Rule for Stage 2 Loader
+
+```
 rule Trojan_LOSTKEYS_Stage2Loader
 {
 meta:
