@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Pivoting Coldriver APT Infrastructure
+title: Pivoting Coldriver APT samples and Infrastructure
 date: '2025-05-17 00:00:00 +0800'
 categories: [Adversary Infrastructure]
 tags: [APT, Threat Intelligence]
