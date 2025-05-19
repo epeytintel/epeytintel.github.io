@@ -8,7 +8,7 @@ image:
     path: /images/2025-05-17-Coldriver-Lostkeys/frozen-river.webp
 ---
 
-# Introduction
+## Introduction
 
 Recently, Google Threat Intelligence Group (GTIG) has shared a new malware used by COLDRIVER which they called as LOSTKEYS. LOSTKEYS can steal specific files from hard-coded list of extensions and directories. It also collects system information and running processes from the victim's machine and send it to the attacker. 
 
@@ -17,7 +17,7 @@ In this write-up, I'll be sharing some of my findings and YARA rules to look for
 You can read Google's original blog post here: [COLDRIVER Using New Malware To Steal Documents From Western Targets and NGOs](https://cloud.google.com/blog/topics/threat-intelligence/coldriver-steal-documents-western-targets-ngos)
 
 
-# Stage 1 - Initial Access via ClickFix
+## Stage 1 - Initial Access via ClickFix
 
 LOSTKEYS is delivered using a Social Engineering technique known as `CLICKFIX`. In this method, the attacker creates a lure website that displays a fake CAPTCHA to trick the victim to "complete" a fake verification step. Instead of solving a real CAPTCHA, the victim is instructed to copy and paste a command into Windows `RUN` dialog. The command is actually a malicious Powershell command that will execute the malware.
 
@@ -66,7 +66,7 @@ condition:
 
 This information can serve as a useful pivot point for identifying additional infrastructure used by the COLDRIVER in this related campaign.
 
-# Stage 2 - Anti VM
+## Stage 2 - Anti VM
 
 Stage 2 is responsible for checking if the environment the malware was executed is a Virtual Machine. It checks this by calculating the MD5 hash of the display resolution and compare it with the 3 hardcoded hash values. If it passess the Anti VM check, it will proceed to download Stage 3.
 
@@ -112,7 +112,7 @@ This time we discovered a new sample with low detection. The sample is similar t
 ![img-description](/images/2025-05-17-Coldriver-Lostkeys/newstage2.png)
 
 
-# Pivoting similar C2
+## Pivoting similar C2
 
 According to the blog, the same IP address (*165.227.148[.]68*) was repeatedly used to download subsequent stages of the malware. For pivoting similar C2, we will also use the findings we got from the Stage 1 Loader. 
 
@@ -140,7 +140,7 @@ Upon analyzing the code, we found a function that is part of the **ClickFix Stag
 
 ![img-description](/images/2025-05-17-Coldriver-Lostkeys/maldom1.png)
 
-## Finding other C2 servers
+### Finding other C2 servers
 
 By examining the code within the HTML response body, we can extract malicious functions and indicators that we can use to query similar C2 infrastructures.
 
@@ -156,7 +156,7 @@ From this query, we identified two IP addresses, including the one previously me
 - `165.227.148[.]68` — `cloudmediaportal[.]com`
 - `193.43.104[.]109` — `mobilizationcenter[.]com.ua` **(new)**
 
-## Verifying discovered C2 Servers
+### Verifying discovered C2 Servers
 
 The newly discovered c2 has low detection on VirusTotal and currently does not have any community comments.
 
@@ -174,11 +174,11 @@ By examining the DOM, we can verify that this domain is part of the COLDRIVER in
 
 ---
 
-# LOSTKEYS IOCs
-## additional samples
+## LOSTKEYS IOCs
+### Additional samples
 - e6e6648e087971cd311c3d2c27a0477fea674ded - Stage 2 Loader
 
-## Additional C2
+### Additional C2
 - 193.43.104[.]109 - mobilizationcenter[.]com.ua
 
 
